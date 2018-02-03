@@ -12,7 +12,20 @@ export default function IndexController(container) {
 }
 
 IndexController.prototype._registerServiceWorker = function() {
-  // TODO: register service worker
+  // register service worker as page loads
+  self.addEventListener('load', () => {
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('./sw.js')
+        .then((registration) => {
+          console.log(`Service Worker Registration was successful: ${registration}`);
+        })
+        .catch((e) => {
+          console.error(`Service Worker Registration failed: ${e}`);
+        });
+    } else {
+      console.log('This browser has not support for Service worker.');
+    }
+  });
 };
 
 // open a connection to the server for live updates
