@@ -28,4 +28,10 @@ dbPromise.then(function(db) {
   // TODO: in the keyval store, set
   // "favoriteAnimal" to your favourite animal
   // eg "cat" or "dog"
+  var tx = db.transaction('keyval', 'readwrite');
+  var keyValStore = tx.objectStore('keyval');
+  keyValStore.put('dog', 'favoriteAnimal');
+  return tx.complete;
+}).then(() => {
+  console.log('Added favoriteAnimal:dog to keyval');
 });
